@@ -1,0 +1,56 @@
+
+% Justin Price
+%Class: VLSI
+%Assignment: HW 2 Problem 2.1 (Textbook pg 95)
+
+
+% Consider an nMOS transistor in a 0.6 μm process with W/L = 4/2 λ (i.e., 1.2/0.6 μm). 
+% In this process, the gate oxide thickness is 100 Å and the mobility of 
+% electrons is 350 cm2 /V· s. The threshold voltage is 0.7 V. 
+% 
+% Plot Ids vs. Vds for Vgs = 0, 1, 2, 3, 4, and 5 V
+% 
+%-----------------------------------------
+
+% intialize workspace
+clf;        % clears Figure
+clc;        % Clears commmand Window
+
+% Set Variables for problem
+WidthOverLength = 1.2/0.6;               % Width to Length Ratio
+Beta = 120.8 * WidthOverLength;          % β Conduction Parameter
+Vt = 0.7;                       %Voltage Threshold
+Vds = 0:0.1:5;                  %Vds scaling from 0 to 5 over 0.1 step interverals
+Vgs = [0, 1, 2, 3, 4, 5];       %Vgs Voltage gate source going from 1 to 5
+Ids = zeros(1, length(Vds));    %Drain Current
+
+%prepare Graph
+hold off
+plot(Vds, Ids, 'k')             %
+hold all                        %keep all graph lines on one figure
+Ids = zeros;
+
+%Create Piecewise function for cutoff,Linear, and Saturation Region
+for i = 2:length(Vgs)
+    VGT = Vgs(i) - Vt;
+    Vdsat = VGT;
+
+    for p = 1:length(Vds)
+
+        if (Vds(p) < Vdsat) % linear region
+            Ids(p) = Beta * (VGT - 0.5* Vds(p))*Vds(p);
+
+        else    %saturation region 
+            Ids(p) = 0.5*Beta * VGT^2;
+        end
+    end
+
+    plot(Vds,Ids)       %plot Vds (x-axis) and Ids (y-axis)
+
+end
+
+%Label Graph Axis and Ledgend
+legend('Vgs = 0', 'Vgs = 1', 'Vgs = 2', 'Vgs = 3', 'Vgs = 4', 'Vgs = 5');
+xlabel('Vds: Drain to source voltage');
+ylabel('Ids: Drain current ');
+

@@ -1,0 +1,50 @@
+%*************************************************************
+% Assignment: Reliability Engineering HW 1
+% Problem 3.4: Using matlab
+
+%Problem 3.4
+%A hydraulic system is comprised of five components having the following 
+% constant failure rates (times are in days): 
+% λ1: 0.001, λ2 = 0.005, λ3 = 0.0007, λ4 = 0.0025, and λ5 = 0.00001.
+
+% a) 
+%Find the system MTTF and standard deviation
+
+% b)
+%Find the system design life if a 0.99 reliability is desired
+
+
+
+% %**************************************************************
+
+% intialize 
+clear; 
+clc;
+clf;
+
+% Create varibales
+lambda_1 = 0.001;
+lambda_2 = 0.005;
+lambda_3 = 0.0007;
+lambda_4 = 0.0025;
+lambda_5 = 0.00001;
+
+lambda_arrary = [lambda_1, lambda_2, lambda_3, lambda_4, lambda_5];
+% ----------------------------------------------------------------------------------
+% a) 
+%Find the system MTTF and standard deviation
+
+% MTTF is 1 over the sum of all the failure rates
+MTTF = 1 / sum(lambda_arrary)
+
+%the standard deviation is equal to the MTTF
+standard_dev = MTTF
+% ----------------------------------------------------------------------------------
+
+% b)
+%Find the system design life if a 0.99 reliability is desired
+
+% 0.99  = exp(-(sum(lambda_array))t)
+R = 0.99;
+
+Design_Life = -(log(R)/sum(lambda_arrary))

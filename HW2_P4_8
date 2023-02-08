@@ -1,0 +1,94 @@
+%*************************************************************
+% Assignment: Reliability Engineering HW 2
+% Problem 3.4: Using matlab
+
+%Problem 4.8
+%The time to failure in operating hours of a critical solid - state power 
+% unit has the following hazard rate function 
+% λ(t) = 0.003(T/500)^0.5  for t ≥ 0.
+
+% a) 
+%What is the reliability if the power unit must operate continuously for 50 hr?
+
+% b)
+%Determine the design life if a reliability of 0.90 is desired
+
+% c) 
+%Compute the MTTF
+
+% d) 
+%Given that the unit has operated for 50 hr, what is the probability that 
+% it will survive a second 50 hr operation?
+
+
+% e) 
+%The power unit is also subject to chance failures at a rate 
+% of 0.003 failures per operating hour because of the external environment. 
+% What is the power unit%s reliability for the first 50 hr of operation 
+% considering both failure modes? 
+
+
+% %**************************************************************
+
+% intialize 
+clear; 
+clc;
+clf;
+
+% make time (t) a symbolic variable
+syms t;
+%create variables and functions
+theta = 500;
+beta = 1.5;
+lambda_t = 0.003*(t/500)^0.5;
+
+% ----------------------------------------------------------------------------------
+
+% a) 
+%What is the reliability if the power unit must operate continuously for 50 hr?
+R_50hr = double ( exp(-int(lambda_t, t, 0, 50)) ); 
+
+Reliability = R_50hr 
+
+% ----------------------------------------------------------------------------------
+
+% b)
+%Determine the design life if a reliability of 0.90 is desired
+
+Design_life_090 =  theta*(-log(0.9))^(1/beta)
+
+
+
+% ----------------------------------------------------------------------------------
+
+% c) 
+%Compute the MTTF
+
+% Note the gamma function for this problem is Γ(1 + 1/beta ) = 0.903
+MTTF = theta*(0.903)
+
+% ----------------------------------------------------------------------------------
+
+% d) 
+%Given that the unit has operated for 50 hr, what is the probability that 
+% it will survive a second 50 hr operation?
+
+R_100 =  double ( exp(-int(lambda_t, t, 0, 100)) ); 
+
+Prob_of_survival = R_100/R_50hr
+
+% ----------------------------------------------------------------------------------
+
+% e) 
+%The power unit is also subject to chance failures at a rate 
+% of 0.003 failures per operating hour because of the external environment. 
+% What is the power unit's reliability for the first 50 hr of operation 
+% considering both failure modes? 
+
+
+lambda_t_unit = 0.002+0.003*(t/500)^0.5;
+
+R_first_50 = double ( exp(-int(lambda_t_unit, t, 0, 50)) ) 
+
+
+
